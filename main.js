@@ -9,6 +9,11 @@ const getPokemon = () => {
     .then((res) => res.json())
     .then((pokemon) => {
       rivalArray.push(pokemon);
+      const markup = `<li>${pokemon.name}<li>
+      <img src="${pokemon.sprites.front_default}">`
+
+      document.querySelector('ul').insertAdjacentHTML('beforeend', markup);
+
       console.log(rivalArray);
       console.log(pokemon.name);
     })
@@ -19,14 +24,18 @@ const getPokemon = () => {
     .then((res) => res.json())
     .then((pokemon) => {
       partnerArray.push(pokemon);
+      
+      const markup = `<li>${pokemon.name}<li>
+      <img src="${pokemon.sprites.back_default}">`
+
+      document.querySelector('ul').insertAdjacentHTML('beforeend', markup);
       console.log(partnerArray);
       console.log(pokemon.name);
-      console.log(pokemon.sprites.front_default);
     })
     .catch((error) => {
       console.log(error);
     });
-  populatePokemon();
+  // populatePokemon();
 };
 
 // const populatePokemon = () => {
@@ -43,5 +52,10 @@ const getPokemon = () => {
 //   });
 //   //   partnerArray.forEach((pokemon) => {});
 // };
+
+// const partnerMoves = [];
+//   for (let i = 0; i < 4; i++) {
+//     const randomMoves = Math.floor(Math.random() * pokemon.moves.length);
+//   }
 
 getPokemon();
