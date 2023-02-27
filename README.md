@@ -24,3 +24,10 @@ Taking inspiration from the old school battle menu for pokemon ruby/sapphire/eme
 ### Compare the pokemon (Who is likely to win?):
 
 - This section will be up for debate on wether I want to have them battle using their moves or just present who will win depending on their type advantage/level/moveset/etc.
+
+### Stats & Damage Calculator:
+
+- Pokemon Health is determined by their base stat + 60.
+- Damage will be using this template cut from the damage formula, simplified to create some kind of damage.
+
+![Damage Formula for this program](/img/simple-damage-formula.jpg)
