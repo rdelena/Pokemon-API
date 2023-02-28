@@ -1,5 +1,7 @@
 let rivalArray = [];
 let partnerArray = [];
+let startingRivalHP = null;
+let startingPartnerHP = null;
 
 const getPokemon = () => {
   const maxPokemon = 150;
@@ -9,6 +11,8 @@ const getPokemon = () => {
     .then((res) => res.json())
     .then((pokemon) => {
       rivalArray.push(pokemon);
+      startingRivalHP = pokemon.stats[0].base_stat + 60;
+
       const markup = `<div class = "rivalInfo">
       <p>${pokemon.name.toUpperCase()} </p>
       <p>Lv50</p>
@@ -30,6 +34,7 @@ const getPokemon = () => {
     .then((res) => res.json())
     .then((pokemon) => {
       partnerArray.push(pokemon);
+      startingPartnerHP = pokemon.stats[0].base_stat + 60;
 
       const markup = `
       <img src="${pokemon.sprites.back_default}">
@@ -55,6 +60,7 @@ const getPokemon = () => {
     });
   populateAction();
 };
+
 const populateAction = () => {
   const displayAction = document.querySelector(".actionDisplay");
   displayAction.innerHTML = "";
@@ -65,7 +71,45 @@ const populateAction = () => {
   const fightButton = document.createElement("button");
   fightButton.textContent = "FIGHT";
   fightButton.addEventListener("click", () => {
-    console.log(rivalArray[0].stats[0].base_stat + 60);
+    const fightBattle = () => {
+      console.log(`Rival Starting HP: ${startingRivalHP}`);
+      let partnerAttack = partnerArray[0].stats[1].base_stat;
+      currentRivalHP = startingRivalHP - partnerAttack;
+
+      startingRivalHP = currentRivalHP;
+
+      console.log(`Partner Attack: ${partnerAttack}`);
+      console.log(`Current Rival HP: ${currentRivalHP}`);
+      console.log(`Current Starting HP: ${startingRivalHP}`);
+
+      console.log(`Partner Starting HP: ${startingPartnerHP}`);
+      let rivalAttack = rivalArray[0].stats[1].base_stat;
+      currentPartnerHP = startingPartnerHP - rivalAttack;
+
+      startingPartnerHP = currentPartnerHP;
+
+      console.log(`Rival Attack: ${rivalAttack}`);
+      console.log(`Current Partner HP: ${currentPartnerHP}`);
+      console.log(`Current Starting HP: ${startingPartnerHP}`);
+    };
+    fightBattle();
+    checkForWin();
+
+    const fightDisplay = document.createElement("p");
+    const fightText = document.createTextNode(`
+    ${partnerArray[0].name.toUpperCase()} fought ${rivalArray[0].name.toUpperCase()}! 
+    ${partnerArray[0].name.toUpperCase()} did
+    ${
+      partnerArray[0].stats[1].base_stat
+    } damage to ${rivalArray[0].name.toUpperCase()}. It currently has ${startingRivalHP} HP! ${rivalArray[0].name.toUpperCase()} fought back & did
+    ${
+      rivalArray[0].stats[1].base_stat
+    } damage to ${partnerArray[0].name.toUpperCase()}. It currently has ${startingPartnerHP} HP!
+    `);
+
+    fightDisplay.appendChild(fightText);
+
+    divDisplay.appendChild(fightDisplay);
   });
   divDisplay.appendChild(fightButton);
 
@@ -84,7 +128,35 @@ const populateAction = () => {
 
   const pokemonButton = document.createElement("button");
   pokemonButton.textContent = "POKEMON";
-  pokemonButton.addEventListener("click", () => {});
+  pokemonButton.addEventListener("click", () => {
+    const statsDisplay = document.createElement("div");
+    statsDisplay.classList.add("statsDisplay");
+
+    const partnerImg = document.createElement("img");
+    partnerImg.src = partnerArray[0].sprites.front_default;
+    statsDisplay.appendChild(partnerImg);
+
+    const partnerStatsContainer = document.createElement("p");
+    partnerStatsContainer.classList.add("statsContainer");
+    document.querySelector("statsContainer");
+    const statsText = document.createTextNode(`
+    ID: ${partnerArray[0].id}
+    NAME: ${partnerArray[0].name.toUpperCase()}
+    LVL: 50
+    HP: ${partnerArray[0].stats[0].base_stat}
+    ATTACK: ${partnerArray[0].stats[1].base_stat}
+    DEFENSE: ${partnerArray[0].stats[2].base_stat}
+    SP.ATTACK: ${partnerArray[0].stats[3].base_stat}
+    SP.DEFENSE: ${partnerArray[0].stats[4].base_stat}
+    SPEED: ${partnerArray[0].stats[5].base_stat}
+    `);
+
+    partnerStatsContainer.appendChild(statsText);
+
+    statsDisplay.appendChild(partnerStatsContainer);
+
+    divDisplay.appendChild(statsDisplay);
+  });
   divDisplay.appendChild(pokemonButton);
 
   const runButton = document.createElement("button");
@@ -99,41 +171,16 @@ const populateAction = () => {
 };
 
 const checkForWin = () => {
-  if (rivalHP <= 0) {
+  if (currentRivalHP <= 0) {
     console.log("You Win!");
     alert("You Win!");
-  } else if (partnerHP <= 0) {
-    console.log("You Win!");
-    alert("You Win!");
+    setTimeout(() => location.reload(), 6000);
+  } else if (currentPartnerHP <= 0) {
+    console.log("You Lose!");
+    alert("You Lose! Try Again");
     location.reload();
   }
 };
-
-const fightBattle = () => {};
-let damage;
-let currentRivalHP;
-let currentPartnerlHP;
-
-// const populatePokemon = () => {
-//   const pokeContainer = document.querySelector(".displayPokemon");
-//   pokeContainer.innerHTML = "";
-//   rivalArray.forEach((pokemon) => {
-//     const li = document.createElement("li");
-
-//     const rivalImg = document.createElement("img");
-//     rivalImg.classList.add("image");
-//     rivalImg.src = pokemon.sprites.front_default;
-//     li.appendChild(rivalImg);
-//     pokeContainer.appendChild(li);
-//   });
-//   //   partnerArray.forEach((pokemon) => {});
-// };
-// let moves = [];
-// for (let i = 0; i < 4; i++) {
-//   const randomMoves = Math.floor(Math.random() * pokemon.moves.length);
-//   const move = pokemon.moves[randomMoves].move.name;
-//   moves.push(move
-// }
 
 window.onload = function () {
   getPokemon();
