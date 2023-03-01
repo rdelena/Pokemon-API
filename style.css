@@ -1,13 +1,20 @@
 @import url("https://fonts.cdnfonts.com/css/pokemon-solid");
+@import url("https://fonts.googleapis.com/css2?family=VT323&display=swap");
 
-html {
+body {
   margin: 0;
   padding: 0;
+  background-image: url(img/pokemon-background.jpg);
+  height: 100vh;
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 h1 {
   text-align: center;
   font-family: "Pokemon Solid", sans-serif;
-  color: black;
+  color: rgb(255, 213, 0.5);
 }
 .container {
   display: flex;
@@ -16,12 +23,105 @@ h1 {
 .displayPokemon {
   background-image: url(img/battlegrass.png);
   height: 100%;
+  max-width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+}
+.rival {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.rivalInfo {
+  padding: 25px;
+  text-align: center;
+}
+.rivalImg {
+  text-align: center;
+  justify-content: center;
+}
+.rImg {
+  height: 200px;
+  width: 200px;
+  padding-top: 50px;
+  padding-left: 200px;
+}
+.partnerImg {
+  text-align: center;
+  justify-content: center;
+}
+.partner {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+.partnerInfo {
+  padding: 25px;
+  text-align: center;
+}
+.pImg {
+  height: 200px;
+  width: 200px;
+  padding-top: 50px;
+  padding-right: 200px;
+}
+
+button {
+  background-color: #4caf50;
+  border: solid, darkgreen;
+  color: white;
+  padding: 15px 30px;
+  text-align: center;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+}
+.buttonDisplay {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   width: 100%;
+}
+.statsDisplay {
+  display: grid;
+  grid-template-columns: 20% 80%;
+  background-image: url(img/background1.jpg);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
 }
-img {
+.statsContainer {
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  text-align: center;
+  padding-top: 50px;
+}
+.statImg {
   height: 200px;
   width: 200px;
+  padding-left: 10%;
+}
+.bagDisplay {
+  background-image: url(img/background1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  text-align: center;
+}
+.bagDisplayText {
+  margin: 0;
+}
+.fightDisplay {
+  background-image: url(img/background1.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  text-align: center;
+}
+.fightDisplayText {
+  margin: 0;
 }

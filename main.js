@@ -16,11 +16,11 @@ const getPokemon = () => {
       const markup = `<div class = "rivalInfo">
       <p>${pokemon.name.toUpperCase()} </p>
       <p>Lv50</p>
-      <p>HP: ${pokemon.stats[0].base_stat + 60}/${
-        pokemon.stats[0].base_stat + 60
-      } <p>
+      <p>HP: ${pokemon.stats[0].base_stat + 60} <p>
       </div>
-      <img src="${pokemon.sprites.front_default}">`;
+      <div class = "rivalImg">
+      <img src="${pokemon.sprites.front_default}" class ="rImg">
+      </div>`;
 
       document.querySelector(".rival").insertAdjacentHTML("beforeend", markup);
 
@@ -37,16 +37,13 @@ const getPokemon = () => {
       startingPartnerHP = pokemon.stats[0].base_stat + 60;
 
       const markup = `
-      <img src="${pokemon.sprites.back_default}">
+      <div class = "partnerImg">
+      <img src="${pokemon.sprites.back_default}" class ="pImg">
+      </div>
       <div class = "partnerInfo">
       <p>${pokemon.name.toUpperCase()}</p>
       <p>Lv50</p>
-      <p>HP: ${pokemon.stats[0].base_stat + 60}/${
-        pokemon.stats[0].base_stat + 60
-      } <p>
-      <p>EXP</p>
-      </div>
-      <div class = "partnerMoves">
+      <p>HP: ${pokemon.stats[0].base_stat + 60} <p>
       </div>`;
 
       document
@@ -80,7 +77,7 @@ const populateAction = () => {
 
       console.log(`Partner Attack: ${partnerAttack}`);
       console.log(`Current Rival HP: ${currentRivalHP}`);
-      console.log(`Current Starting HP: ${startingRivalHP}`);
+      console.log(`Next Battle Starting HP: ${startingRivalHP}`);
 
       console.log(`Partner Starting HP: ${startingPartnerHP}`);
       let rivalAttack = rivalArray[0].stats[1].base_stat;
@@ -90,12 +87,17 @@ const populateAction = () => {
 
       console.log(`Rival Attack: ${rivalAttack}`);
       console.log(`Current Partner HP: ${currentPartnerHP}`);
-      console.log(`Current Starting HP: ${startingPartnerHP}`);
+      console.log(`Next Battle Starting HP: ${startingPartnerHP}`);
+      checkForWin();
     };
     fightBattle();
-    checkForWin();
 
-    const fightDisplay = document.createElement("p");
+    const fightDisplay = document.createElement("div");
+    fightDisplay.classList.add("fightDisplay");
+    const fightTextContainer = document.createElement("p");
+    fightTextContainer.classList.add("fightDisplayText");
+    document.querySelector("fightDisplayText");
+
     const fightText = document.createTextNode(`
     ${partnerArray[0].name.toUpperCase()} fought ${rivalArray[0].name.toUpperCase()}! 
     ${partnerArray[0].name.toUpperCase()} did
@@ -107,22 +109,30 @@ const populateAction = () => {
     } damage to ${partnerArray[0].name.toUpperCase()}. It currently has ${startingPartnerHP} HP!
     `);
 
-    fightDisplay.appendChild(fightText);
+    fightTextContainer.appendChild(fightText);
 
-    divDisplay.appendChild(fightDisplay);
+    fightDisplay.appendChild(fightTextContainer);
+    displayAction.appendChild(fightDisplay);
   });
   divDisplay.appendChild(fightButton);
 
   const bagButton = document.createElement("button");
   bagButton.textContent = "BAG";
   bagButton.addEventListener("click", () => {
-    const bagDisplay = document.createElement("p");
-    divDisplay.appendChild(bagDisplay);
+    const bagDisplay = document.createElement("div");
+    bagDisplay.classList.add("bagDisplay");
+
+    const bagTextContainer = document.createElement("p");
+    bagTextContainer.classList.add("bagDisplayText");
+    document.querySelector("bagDisplayText");
     const bagText = document.createTextNode(
       `You Do Not Have Any Items! You must FIGHT OR RUN!`
     );
-    divDisplay.appendChild(bagText);
-    // bagButton.removeEventListener("click");
+
+    bagTextContainer.appendChild(bagText);
+
+    bagDisplay.appendChild(bagTextContainer);
+    divDisplay.appendChild(bagDisplay);
   });
   divDisplay.appendChild(bagButton);
 
@@ -133,6 +143,7 @@ const populateAction = () => {
     statsDisplay.classList.add("statsDisplay");
 
     const partnerImg = document.createElement("img");
+    partnerImg.classList.add("statImg");
     partnerImg.src = partnerArray[0].sprites.front_default;
     statsDisplay.appendChild(partnerImg);
 
@@ -174,11 +185,11 @@ const checkForWin = () => {
   if (currentRivalHP <= 0) {
     console.log("You Win!");
     alert("You Win!");
-    setTimeout(() => location.reload(), 6000);
+    setTimeout(() => location.reload(), 5000);
   } else if (currentPartnerHP <= 0) {
     console.log("You Lose!");
     alert("You Lose! Try Again");
-    location.reload();
+    setTimeout(() => location.reload(), 4000);
   }
 };
 

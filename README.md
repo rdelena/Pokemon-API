@@ -31,3 +31,5 @@ Taking inspiration from the old school battle menu for pokemon ruby/sapphire/eme
 - Damage will be using this template cut from the damage formula, simplified to create some kind of damage.
 
 ![Damage Formula for this program](/img/simple-damage-formula.jpg)
+
+- Due to time constraints I was not able to implement everything I wanted to add for now. I stuck with the simple battle formula of removing HP by their attack power.
